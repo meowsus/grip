@@ -26,7 +26,7 @@ Coming Soon!
 
 ## Installation
 
-1. Import `_grip.scss` to your project via Bower, NPM, Rails or manually copying to vendor folder (`@import "vendor/grip"`)
+1. Import `_grip.scss` to your project via Bower, NPM, RubyGems or manually copying to vendor folder (`@import "vendor/grip"`)
 2. Override settings to fit your requirements or use the defaults
 3. Compile!
 
@@ -38,15 +38,15 @@ Coming Soon!
 
 `npm install --save grip-grid`
 
-### Rails
+### RubyGems
 
-`gem install grip-grid`
+`gem install grip-grid-rails`
 
-### Bundler
+### Rails via Bundler
 
 In your `Gemfile`:
 
-`gem 'grip-grid'`
+`gem 'grip-grid-rails'`
 
 And in your application manifest:
 

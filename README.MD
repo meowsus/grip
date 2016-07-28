@@ -152,7 +152,7 @@ Grip includes a media query mixin that makes use of the breakpoint aliases you s
 
 ```
 .content-item {
-  @include grip-respond-to(pocket) {
+  @include grip-respond-to(medium) {
     /* responsive CSS */
   }
 }

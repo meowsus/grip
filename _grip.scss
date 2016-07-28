@@ -1,36 +1,37 @@
-/*! Grip | MIT License | @colourgarden & @meowsus */
+/*! Grip | MIT License | @colourgarden & @meowsus// */
 
-/*------------------------------------*\
-    SETTINGS
-\*------------------------------------*/
+////////////////////////////////////////
+//  #SETTINGS
+////////////////////////////////////////
 
-$grip-namespace:  'grid' !default;  // Prefix namespace for grid layout and cells
-$grip-gutter:     20px !default;    // Gutter between grid cells
+//
+// 1. prefix namespace for grid layout and cells
+// 2. the gutter applied to grid cells
+// 3. width class naming style. Options include `fraction`, `percentage` or
+//    `fragment`
+// 4. width denominator values. Modify as needed. 2 = 1/2, 3 = 1/3, 2/3, etc.
+// 5. enables permutation of all width classes with appended responsive modifier
+//    suffixes
+// 6. responsive breakpoints. Modify as needed.
+//
+$grip-namespace:  'grid' !default;  // [1]
+$grip-gutter:     20px !default;    // [2]
 
-$grip-width-class-style:  'fraction' !default;  // Width class naming style. Can be 'fraction', 'percentage' or 'fragment'
-$grip-widths: (
-  2,
-  3,
-  4
-) !default; // Width denominator values. 2 = 1/2, 3 = 1/3 etc. Add/remove as appropriate
+$grip-width-class-style:  'fraction' !default;  // [3]
+$grip-widths:             (2, 3, 4) !default;   // [4]
 
-$grip-enable-responsive:  true !default;
-$grip-breakpoints:  (
-  "thumb":            "screen and (max-width: 499px)",
-  "handheld":         "screen and (min-width: 500px) and (max-width: 800px)",
-  "handheld-and-up":  "screen and (min-width: 500px)",
-  "pocket":           "screen and (max-width: 800px)",
-  "lap":              "screen and (min-width: 801px) and (max-width: 1024px)",
-  "lap-and-up":       "screen and (min-width: 801px)",
-  "portable":         "screen and (max-width: 1024px)",
-  "desk":             "screen and (min-width: 1025px)",
-  "widescreen":       "screen and (min-width: 1160px)",
-  "retina":           "screen and (-webkit-min-device-pixel-ratio: 2), screen and (min-resolution: 192dpi), screen and (min-resolution: 2dppx)"
-) !default; // Responsive breakpoints. Add/remove as appropriate
+$grip-enable-responsive:  true !default;  // [5]
+$grip-breakpoints: (
+  "medium":  "screen and (min-width: 760px)",
+  "wide":    "screen and (min-width: 960px)",
+  "x-wide":  "screen and (min-width: 1160px)",
+) !default;  // [6]
 
-// Enable/disable grid layouts
+
+//
+// Toggleable grid layout modifiers.
+//
 $grip-enable-grid-center:       false !default;
-$grip-enable-grid-cell-center:  false !default;
 $grip-enable-grid-right:        false !default;
 $grip-enable-grid-middle:       false !default;
 $grip-enable-grid-bottom:       false !default;
@@ -43,265 +44,280 @@ $grip-enable-grid-auto:         false !default;
 $grip-enable-grid-rev:          false !default;
 
 
+//
+// Toggleable grid cell layout modifiers.
+//
+$grip-enable-grid-cell-center:  false !default;
 
 
 
-/*------------------------------------*\
-    LOGIC aka THE MAGIC
-\*------------------------------------*/
 
-@function gripCreateClassName($style, $numerator, $denominator, $breakpoint-alias){
 
-  $class-name: null;
+////////////////////////////////////////
+//  #FUNCTIONS
+////////////////////////////////////////
+//
+// Responsible for constructing the grid cell class name. Returns Strings like:
+// `grid__cell--16` or `grid__cell--16-at-medium`.
+//
+// 1. sets the width delimiter
+// 2. sets the class name to `grid__cell--1/6` or `grid__cell--1-of-6`
+// 3. sets the class name to `grid__cell--16` which is the percentage, floored
+//
+@function grip-create-class-name($style, $numerator, $denominator, $breakpoint-alias) {
+    $class-name: null;
 
-  @if $style == 'fraction' or $style == 'fragment'{
-    // Set delimiter as slash or text
-    $delimiter: if($style == 'fraction', \/, -of-);
-    $class-name: "grid__cell--#{$numerator}#{$delimiter}#{$denominator}#{$breakpoint-alias}";
-  } @else{
-    $class-width: floor(($numerator / $denominator) * 100);
-    $class-name: "grid__cell--#{$class-width}#{$breakpoint-alias}";
-  }
+    @if ($style == 'fraction' or $style == 'fragment') {
+        $delimiter: if($style == 'fraction', \/, -of-); // [1]
+        $class-name: "#{$grip-namespace}__cell--#{$numerator}#{$delimiter}#{$denominator}#{$breakpoint-alias}"; // [2]
+    }
+    @else {
+        $class-width: floor(($numerator / $denominator) * 100);
+        $class-name: "#{$grip-namespace}__cell--#{$class-width}#{$breakpoint-alias}"; // [3]
+    }
 
-  @return $class-name;
+    @return $class-name;
 }
 
-@mixin grip-create-widths($widths, $breakpoint-alias: null){
 
-  // Initialise an empty utility map that will eventually contain all our classes
-  $pseudo-class-map: ();
 
-  // Loop widths
-  @each $denominator in $widths{
 
-    // If 1=1, 2=2, 3=3; @for will skip over so create 1/1 class manually
-    @if ($denominator == 1) {
 
-      // Create 1/1 class
-      $class-name: gripCreateClassName($grip-width-class-style, 1, 1, $breakpoint-alias);
-      .#{$class-name}{
-        width: 100%;
-      }
+////////////////////////////////////////
+//  #MIXINS
+////////////////////////////////////////
+//
+// Responsible for outputting the final list of width modifiers.
+//
+// 1. create a scoped, temporary map of width data. Used to ensure there is no
+//    class duplication
+// 2. handle the use case of someone using a `1` in the `$grid-widths` map
+// 3. loop widths as fractions
+// 4. determine if this width data is already accounted for in the temporary map
+// 5. add the new entry to the temporary map
+//
+@mixin grip-create-widths($widths, $breakpoint-alias: null) {
+    $pseudo-class-map: (); // [1]
 
-    } @else {
+    @each $denominator in $widths {
+        @if ($denominator == 1) { // [2]
+            $class-name: grip-create-class-name($grip-width-class-style, 1, 1, $breakpoint-alias);
 
-      // Loop widths as fractions
-      @for $numerator from 1 to $denominator{
-
-        // Create class name and set width value
-        $class-name: gripCreateClassName($grip-width-class-style, $numerator,$denominator, $breakpoint-alias);
-        $width-value: percentage($numerator / $denominator);
-
-        // Is this width already in our utility map?
-        $duplicate: map-get($pseudo-class-map, $width-value);
-
-        // Create width class
-        .#{$class-name}{
-
-          // If this width is in utility map, @extend the duplicate, else create a new one
-          @if $duplicate{
-            @extend .#{$duplicate};
-          } @else{
-            width: $width-value;
-          }
+            .#{$class-name} {
+                width: 100%;
+            }
         }
+        @else {
+            @for $numerator from 1 to $denominator { // [3]
+                $class-name: grip-create-class-name($grip-width-class-style, $numerator, $denominator, $breakpoint-alias);
+                $width-value: percentage($numerator / $denominator);
 
-        // Add this class to utility map
-        $add-class: ($width-value: $class-name);
-        $pseudo-class-map: map-merge($pseudo-class-map, $add-class);
-      }
+                $duplicate: map-get($pseudo-class-map, $width-value); // [4]
+                @if ($duplicate == null) {
+                    .#{$class-name} {
+                        width: $width-value;
+                    }
+
+                    $add-class: ($width-value: $class-name);
+                    $pseudo-class-map: map-merge($pseudo-class-map, $add-class); // [5]
+                }
+            }
+        }
     }
-  }
 }
 
-@mixin av-mq($alias){
 
-  // Search breakpoint map for alias
-  $query: map-get($grip-breakpoints, $alias);
+////////////////////////////////////////
+//  #RESPOND-TO-MIXIN
+////////////////////////////////////////
+//
+// Provides a way to hook into the breakpoints defined in `$grip-breakpoints`.
+//
+// 1. search breakpoint for alias
+// 2. if alias exists, print out media query
+//
+@mixin grip-respond-to($alias) {
+    $query: map-get($grip-breakpoints, $alias); // [1]
 
-  // If alias exists, print out media query
-  @if $query{
-    @media #{$query}{
-      @content;
+    @if ($query) { // [2]
+        @media #{$query} {
+            @content;
+        }
     }
-  } @else{
-    @error "No breakpoint found for #{$alias}";
-  }
-}
-
-
-
-
-
-/*------------------------------------*\
-    GRID LAYOUT
-\*------------------------------------*/
-
-.#{$grip-namespace}{
-  display: block;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  margin-left: -($grip-gutter);
-  font-size: 0rem;
-}
-
-  .#{$grip-namespace}__cell{
-    box-sizing: border-box;
-    display: inline-block;
-    width: 100%;
-    padding: 0;
-    padding-left: $grip-gutter;
-    margin: 0;
-    vertical-align: top;
-    font-size: 1rem;
-  }
-
-@if $grip-enable-grid-center{
-
-  .#{$grip-namespace}--center{
-    text-align: center;
-
-    > .#{$grip-namespace}__cell{
-      text-align: left;
+    @else{
+        @error "No breakpoint found for #{$alias}";
     }
-  }
 }
 
-@if $grip-enable-grid-cell-center{
 
-  .#{$grip-namespace}__cell--center{
+
+
+
+////////////////////////////////////////
+//  #GRID-LAYOUT
+////////////////////////////////////////
+
+.#{$grip-namespace} {
     display: block;
-    margin: 0 auto;
-  }
+    margin:  0;
+    margin-left: -($grip-gutter);
+    padding: 0;
+    font-size: 0;
+    list-style: none;
 }
 
-@if $grip-enable-grid-right{
-
-  .#{$grip-namespace}--right{
-    text-align: right;
-
-    > .#{$grip-namespace}__cell{
-      text-align: left;
+    .#{$grip-namespace}__cell {
+        display: inline-block;
+        margin:  0;
+        padding: 0;
+        padding-left: $grip-gutter;
+        width: 100%;
+        font-size: 1rem;
+        vertical-align: top;
+        box-sizing: border-box;
     }
-  }
+
+
+
+
+
+////////////////////////////////////////
+// #TOGGLEABLE-GRID-LAYOUT-MODIFIERS
+////////////////////////////////////////
+
+@if ($grip-enable-grid-center) {
+    .#{$grip-namespace}--center {
+        text-align: center;
+
+        > .#{$grip-namespace}__cell {
+            text-align: left;
+        }
+    }
 }
 
-@if $grip-enable-grid-middle{
+@if ($grip-enable-grid-right) {
+    .#{$grip-namespace}--right {
+        text-align: right;
 
-  .#{$grip-namespace}--middle{
-
-    > .#{$grip-namespace}__cell{
-      vertical-align: middle;
+        > .#{$grip-namespace}__cell {
+            text-align: left;
+        }
     }
-  }
 }
 
-@if $grip-enable-grid-bottom{
-
-  .#{$grip-namespace}--bottom{
-
-    > .#{$grip-namespace}__cell{
-      vertical-align: bottom;
+@if ($grip-enable-grid-middle) {
+    .#{$grip-namespace}--middle {
+        > .#{$grip-namespace}__cell {
+            vertical-align: middle;
+        }
     }
-  }
 }
 
-@if $grip-enable-grid-flush{
-
-  .#{$grip-namespace}--flush{
-    margin-left: 0;
-
-    > .#{$grip-namespace}__cell{
-      padding-left: 0;
+@if ($grip-enable-grid-bottom) {
+    .#{$grip-namespace}--bottom {
+        > .#{$grip-namespace}__cell {
+            vertical-align: bottom;
+        }
     }
-  }
 }
 
-@if $grip-enable-grid-tiny{
+@if ($grip-enable-grid-flush) {
+    .#{$grip-namespace}--flush {
+        margin-left: 0;
 
-  .#{$grip-namespace}--tiny{
-    margin-left: -($grip-gutter / 4);
-
-    > .#{$grip-namespace}__cell{
-      padding-left: ($grip-gutter / 4);
+        > .#{$grip-namespace}__cell {
+            padding-left: 0;
+        }
     }
-  }
 }
 
-@if $grip-enable-grid-small{
+@if ($grip-enable-grid-tiny) {
+    .#{$grip-namespace}--tiny {
+        margin-left: -($grip-gutter / 4);
 
-  .#{$grip-namespace}--small{
-    margin-left: -($grip-gutter / 2);
-
-    > .#{$grip-namespace}__cell{
-      padding-left: ($grip-gutter / 2);
+        > .#{$grip-namespace}__cell {
+            padding-left: ($grip-gutter / 4);
+        }
     }
-  }
 }
 
-@if $grip-enable-grid-large{
+@if ($grip-enable-grid-small) {
+    .#{$grip-namespace}--small {
+        margin-left: -($grip-gutter / 2);
 
-  .#{$grip-namespace}--large{
-    margin-left: -($grip-gutter * 2);
-
-    > .#{$grip-namespace}__cell{
-      padding-left: ($grip-gutter * 2);
+        > .#{$grip-namespace}__cell {
+            padding-left: ($grip-gutter / 2);
+        }
     }
-  }
 }
 
-@if $grip-enable-grid-huge{
+@if ($grip-enable-grid-large) {
+    .#{$grip-namespace}--large {
+        margin-left: -($grip-gutter * 2);
 
-  .#{$grip-namespace}--huge{
-    margin-left: -($grip-gutter * 4);
-
-    > .#{$grip-namespace}__cell{
-      padding-left: ($grip-gutter * 4);
+        > .#{$grip-namespace}__cell {
+            padding-left: ($grip-gutter * 2);
+        }
     }
-  }
 }
 
-@if $grip-enable-grid-auto{
+@if ($grip-enable-grid-huge) {
+    .#{$grip-namespace}--huge {
+        margin-left: -($grip-gutter * 4);
 
-  .#{$grip-namespace}--auto{
-
-    > .#{$grip-namespace}__cell{
-      width: auto;
+        > .#{$grip-namespace}__cell {
+            padding-left: ($grip-gutter * 4);
+        }
     }
-  }
 }
 
-@if $grip-enable-grid-rev{
-
-  .#{$grip-namespace}--rev{
-    direction: rtl;
-
-    > .#{$grip-namespace}__cell{
-      direction: ltr;
+@if ($grip-enable-grid-auto) {
+    .#{$grip-namespace}--auto {
+        > .#{$grip-namespace}__cell {
+            width: auto;
+        }
     }
-  }
+}
+
+@if ($grip-enable-grid-rev) {
+    .#{$grip-namespace}--rev {
+        direction: rtl;
+
+        > .#{$grip-namespace}__cell {
+            direction: ltr;
+        }
+    }
+}
+
+
+////////////////////////////////////////
+//  #TOGGLEABLE-GRID-CELL-MODIFIERS
+////////////////////////////////////////
+
+@if ($grip-enable-grid-cell-center) {
+    .#{$grip-namespace}__cell--center {
+        display: block;
+        margin: 0 auto;
+    }
 }
 
 
 
 
 
-/*------------------------------------*\
-    GRID WIDTHS
-\*------------------------------------*/
+////////////////////////////////////////
+//  #GRID-WIDTHS
+////////////////////////////////////////
+//
+// 1. output default width modifiers
+// 2. if responsive flag is enabled, add responsive width modifiers
+//
+@include grip-create-widths($grip-widths); // [1]
 
-// Loop default widths
-@include grip-create-widths($grip-widths);
-
-// If responsive flag enabled, loop breakpoint widths
-@if $grip-enable-responsive{
-
-  @each $alias, $query in $grip-breakpoints{
-
-    // Create each media query
-    @media #{$query}{
-      @include grip-create-widths($grip-widths, -for-#{$alias});
+@if $grip-enable-responsive { // [2]
+    @each $alias, $query in $grip-breakpoints {
+        @media #{$query} {
+            @include grip-create-widths($grip-widths, -for-#{$alias});
+        }
     }
-  }
 }

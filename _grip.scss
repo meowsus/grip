@@ -1,21 +1,21 @@
-/*! Avalanche | MIT License | @colourgarden */
+/*! Grip | MIT License | @colourgarden & @meowsus */
 
 /*------------------------------------*\
     SETTINGS
 \*------------------------------------*/
 
-$av-namespace:  'grid' !default;  // Prefix namespace for grid layout and cells
-$av-gutter:     20px !default;    // Gutter between grid cells
+$grip-namespace:  'grid' !default;  // Prefix namespace for grid layout and cells
+$grip-gutter:     20px !default;    // Gutter between grid cells
 
-$av-width-class-style:  'fraction' !default;  // Width class naming style. Can be 'fraction', 'percentage' or 'fragment'
-$av-widths: (
+$grip-width-class-style:  'fraction' !default;  // Width class naming style. Can be 'fraction', 'percentage' or 'fragment'
+$grip-widths: (
   2,
   3,
   4
 ) !default; // Width denominator values. 2 = 1/2, 3 = 1/3 etc. Add/remove as appropriate
 
-$av-enable-responsive:  true !default;
-$av-breakpoints:  (
+$grip-enable-responsive:  true !default;
+$grip-breakpoints:  (
   "thumb":            "screen and (max-width: 499px)",
   "handheld":         "screen and (min-width: 500px) and (max-width: 800px)",
   "handheld-and-up":  "screen and (min-width: 500px)",
@@ -29,18 +29,18 @@ $av-breakpoints:  (
 ) !default; // Responsive breakpoints. Add/remove as appropriate
 
 // Enable/disable grid layouts
-$av-enable-grid-center:       false !default;
-$av-enable-grid-cell-center:  false !default;
-$av-enable-grid-right:        false !default;
-$av-enable-grid-middle:       false !default;
-$av-enable-grid-bottom:       false !default;
-$av-enable-grid-flush:        false !default;
-$av-enable-grid-tiny:         false !default;
-$av-enable-grid-small:        false !default;
-$av-enable-grid-large:        false !default;
-$av-enable-grid-huge:         false !default;
-$av-enable-grid-auto:         false !default;
-$av-enable-grid-rev:          false !default;
+$grip-enable-grid-center:       false !default;
+$grip-enable-grid-cell-center:  false !default;
+$grip-enable-grid-right:        false !default;
+$grip-enable-grid-middle:       false !default;
+$grip-enable-grid-bottom:       false !default;
+$grip-enable-grid-flush:        false !default;
+$grip-enable-grid-tiny:         false !default;
+$grip-enable-grid-small:        false !default;
+$grip-enable-grid-large:        false !default;
+$grip-enable-grid-huge:         false !default;
+$grip-enable-grid-auto:         false !default;
+$grip-enable-grid-rev:          false !default;
 
 
 
@@ -50,7 +50,7 @@ $av-enable-grid-rev:          false !default;
     LOGIC aka THE MAGIC
 \*------------------------------------*/
 
-@function avCreateClassName($style, $numerator, $denominator, $breakpoint-alias){
+@function gripCreateClassName($style, $numerator, $denominator, $breakpoint-alias){
 
   $class-name: null;
 
@@ -66,7 +66,7 @@ $av-enable-grid-rev:          false !default;
   @return $class-name;
 }
 
-@mixin av-create-widths($widths, $breakpoint-alias: null){
+@mixin grip-create-widths($widths, $breakpoint-alias: null){
 
   // Initialise an empty utility map that will eventually contain all our classes
   $pseudo-class-map: ();
@@ -78,7 +78,7 @@ $av-enable-grid-rev:          false !default;
     @if ($denominator == 1) {
 
       // Create 1/1 class
-      $class-name: avCreateClassName($av-width-class-style, 1, 1, $breakpoint-alias);
+      $class-name: gripCreateClassName($grip-width-class-style, 1, 1, $breakpoint-alias);
       .#{$class-name}{
         width: 100%;
       }
@@ -89,7 +89,7 @@ $av-enable-grid-rev:          false !default;
       @for $numerator from 1 to $denominator{
 
         // Create class name and set width value
-        $class-name: avCreateClassName($av-width-class-style, $numerator,$denominator, $breakpoint-alias);
+        $class-name: gripCreateClassName($grip-width-class-style, $numerator,$denominator, $breakpoint-alias);
         $width-value: percentage($numerator / $denominator);
 
         // Is this width already in our utility map?
@@ -117,7 +117,7 @@ $av-enable-grid-rev:          false !default;
 @mixin av-mq($alias){
 
   // Search breakpoint map for alias
-  $query: map-get($av-breakpoints, $alias);
+  $query: map-get($grip-breakpoints, $alias);
 
   // If alias exists, print out media query
   @if $query{
@@ -137,147 +137,147 @@ $av-enable-grid-rev:          false !default;
     GRID LAYOUT
 \*------------------------------------*/
 
-.#{$av-namespace}{
+.#{$grip-namespace}{
   display: block;
   list-style: none;
   padding: 0;
   margin: 0;
-  margin-left: -($av-gutter);
+  margin-left: -($grip-gutter);
   font-size: 0rem;
 }
 
-  .#{$av-namespace}__cell{
+  .#{$grip-namespace}__cell{
     box-sizing: border-box;
     display: inline-block;
     width: 100%;
     padding: 0;
-    padding-left: $av-gutter;
+    padding-left: $grip-gutter;
     margin: 0;
     vertical-align: top;
     font-size: 1rem;
   }
 
-@if $av-enable-grid-center{
+@if $grip-enable-grid-center{
 
-  .#{$av-namespace}--center{
+  .#{$grip-namespace}--center{
     text-align: center;
 
-    > .#{$av-namespace}__cell{
+    > .#{$grip-namespace}__cell{
       text-align: left;
     }
   }
 }
 
-@if $av-enable-grid-cell-center{
+@if $grip-enable-grid-cell-center{
 
-  .#{$av-namespace}__cell--center{
+  .#{$grip-namespace}__cell--center{
     display: block;
     margin: 0 auto;
   }
 }
 
-@if $av-enable-grid-right{
+@if $grip-enable-grid-right{
 
-  .#{$av-namespace}--right{
+  .#{$grip-namespace}--right{
     text-align: right;
 
-    > .#{$av-namespace}__cell{
+    > .#{$grip-namespace}__cell{
       text-align: left;
     }
   }
 }
 
-@if $av-enable-grid-middle{
+@if $grip-enable-grid-middle{
 
-  .#{$av-namespace}--middle{
+  .#{$grip-namespace}--middle{
 
-    > .#{$av-namespace}__cell{
+    > .#{$grip-namespace}__cell{
       vertical-align: middle;
     }
   }
 }
 
-@if $av-enable-grid-bottom{
+@if $grip-enable-grid-bottom{
 
-  .#{$av-namespace}--bottom{
+  .#{$grip-namespace}--bottom{
 
-    > .#{$av-namespace}__cell{
+    > .#{$grip-namespace}__cell{
       vertical-align: bottom;
     }
   }
 }
 
-@if $av-enable-grid-flush{
+@if $grip-enable-grid-flush{
 
-  .#{$av-namespace}--flush{
+  .#{$grip-namespace}--flush{
     margin-left: 0;
 
-    > .#{$av-namespace}__cell{
+    > .#{$grip-namespace}__cell{
       padding-left: 0;
     }
   }
 }
 
-@if $av-enable-grid-tiny{
+@if $grip-enable-grid-tiny{
 
-  .#{$av-namespace}--tiny{
-    margin-left: -($av-gutter / 4);
+  .#{$grip-namespace}--tiny{
+    margin-left: -($grip-gutter / 4);
 
-    > .#{$av-namespace}__cell{
-      padding-left: ($av-gutter / 4);
+    > .#{$grip-namespace}__cell{
+      padding-left: ($grip-gutter / 4);
     }
   }
 }
 
-@if $av-enable-grid-small{
+@if $grip-enable-grid-small{
 
-  .#{$av-namespace}--small{
-    margin-left: -($av-gutter / 2);
+  .#{$grip-namespace}--small{
+    margin-left: -($grip-gutter / 2);
 
-    > .#{$av-namespace}__cell{
-      padding-left: ($av-gutter / 2);
+    > .#{$grip-namespace}__cell{
+      padding-left: ($grip-gutter / 2);
     }
   }
 }
 
-@if $av-enable-grid-large{
+@if $grip-enable-grid-large{
 
-  .#{$av-namespace}--large{
-    margin-left: -($av-gutter * 2);
+  .#{$grip-namespace}--large{
+    margin-left: -($grip-gutter * 2);
 
-    > .#{$av-namespace}__cell{
-      padding-left: ($av-gutter * 2);
+    > .#{$grip-namespace}__cell{
+      padding-left: ($grip-gutter * 2);
     }
   }
 }
 
-@if $av-enable-grid-huge{
+@if $grip-enable-grid-huge{
 
-  .#{$av-namespace}--huge{
-    margin-left: -($av-gutter * 4);
+  .#{$grip-namespace}--huge{
+    margin-left: -($grip-gutter * 4);
 
-    > .#{$av-namespace}__cell{
-      padding-left: ($av-gutter * 4);
+    > .#{$grip-namespace}__cell{
+      padding-left: ($grip-gutter * 4);
     }
   }
 }
 
-@if $av-enable-grid-auto{
+@if $grip-enable-grid-auto{
 
-  .#{$av-namespace}--auto{
+  .#{$grip-namespace}--auto{
 
-    > .#{$av-namespace}__cell{
+    > .#{$grip-namespace}__cell{
       width: auto;
     }
   }
 }
 
-@if $av-enable-grid-rev{
+@if $grip-enable-grid-rev{
 
-  .#{$av-namespace}--rev{
+  .#{$grip-namespace}--rev{
     direction: rtl;
 
-    > .#{$av-namespace}__cell{
+    > .#{$grip-namespace}__cell{
       direction: ltr;
     }
   }
@@ -292,16 +292,16 @@ $av-enable-grid-rev:          false !default;
 \*------------------------------------*/
 
 // Loop default widths
-@include av-create-widths($av-widths);
+@include grip-create-widths($grip-widths);
 
 // If responsive flag enabled, loop breakpoint widths
-@if $av-enable-responsive{
+@if $grip-enable-responsive{
 
-  @each $alias, $query in $av-breakpoints{
+  @each $alias, $query in $grip-breakpoints{
 
     // Create each media query
     @media #{$query}{
-      @include av-create-widths($av-widths, -for-#{$alias});
+      @include grip-create-widths($grip-widths, -for-#{$alias});
     }
   }
 }

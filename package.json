@@ -1,21 +1,35 @@
 {
-  "name": "avalanche-css",
-  "version": "1.1.2",
-  "description": "Superclean, powerful, responsive, Sass-based, BEM-syntax CSS grid system",
-  "main": "_avalanche.scss",
+  "name": "grip-grid",
+  "version": "0.1.0",
+  "description": "Superclean, powerful, responsive, Sass-based, BEM-syntax CSS grid system based on the incredible Avalanche grid system.",
+  "main": "_grip.scss",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/colourgarden/avalanche.git"
+    "url": "git+https://github.com/meowsus/grip.git"
   },
-  "author": "Tom Hare <tom@hare.me>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/colourgarden/avalanche/issues"
-  },
-  "homepage": "https://github.com/colourgarden/avalanche",
   "keywords": [
     "css",
+    "scss",
     "grid",
-    "oocss"
-  ]
+    "system",
+    "media",
+    "queries",
+    "responsive",
+    "powerful",
+    "scss-based",
+    "bem",
+    "bem-syntax",
+    "avalanche"
+  ],
+  "author": "Curt Howard <curt@meows.us>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/meowsus/grip/issues"
+  },
+  "homepage": "https://github.com/meowsus/grip#readme"
 }

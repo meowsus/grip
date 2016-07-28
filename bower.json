@@ -1,16 +1,31 @@
 {
-  "name": "avalanche-css",
-  "description": "Superclean, powerful, responsive, Sass-based, BEM-syntax CSS grid system",
-  "main": [
-    "_avalanche.scss"
+  "name": "grip-grid",
+  "description": "Superclean, powerful, responsive, Sass-based, BEM-syntax CSS grid system based on the incredible Avalanche grid system.",
+  "main": "_grip.scss",
+  "authors": [
+    "Curt Howard <curt@meows.us>"
   ],
+  "license": "MIT",
   "keywords": [
     "css",
+    "scss",
     "grid",
-    "oocss"
+    "system",
+    "media",
+    "queries",
+    "responsive",
+    "powerful",
+    "scss-based",
+    "bem",
+    "bem-syntax",
+    "avalanche"
   ],
-  "authors": [
-    "Tom Hare <tom@hare.me>"
-  ],
-  "license": "MIT"
+  "homepage": "https://github.com/meowsus/grip",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
 }

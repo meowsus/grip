@@ -1,6 +1,7 @@
-# Avalanche CSS grid system
+# Grip CSS grid system
 
-**Superclean, powerful, responsive, Sass-based, BEM-syntax CSS grid system**
+**Superclean, powerful, responsive, Sass-based, BEM-syntax CSS grid system based on the incredible [Avalanche](https://github.com/colourgarden/avalanche) grid system.**
+
 
 ## Why use Avalanche?
 
@@ -9,26 +10,48 @@
 - No floats. No clears. No .last
 - Flexible, configurable naming conventions
 - Nesting to infinity and beyond
-- Real-world breakpoint naming. 'thumb', 'handheld' and 'desk'; not 'xs', 'md' and 'xl'
 - Integrated media query mixin. Connect your media queries to your grid breakpoints
+
+
+## So, why Grip then?
+
+- It's strict BEM. Our selectors may be uglier but that's a good thing
+- It's mobile-first. Width modifiers modify a cell at a given, named breakpoint
+
 
 ## Demo
 
-View <a href="http://colourgarden.net/avalanche/">the demo</a> to see Avalanche in action!
+Coming Soon!
+
 
 ## Installation
 
-1. Import `_avalanche.scss` to your project via Bower, NPM or manually copying to vendor folder (`@import "vendor/avalanche"`)
+1. Import `_grip.scss` to your project via Bower, NPM, Rails or manually copying to vendor folder (`@import "vendor/grip"`)
 2. Override settings to fit your requirements or use the defaults
 3. Compile!
 
 ### Bower
 
-`bower install --save avalanche-css`
+`bower install --save grip-grid`
 
 ### NPM
 
-`npm install --save avalanche-css`
+`npm install --save grip-grid`
+
+### Rails
+
+`gem install grip-grid`
+
+### Bundler
+
+In your `Gemfile`:
+
+`gem 'grip-grid'`
+
+And in your application manifest:
+
+`@import 'grip';`
+
 
 ## Usage
 
@@ -36,107 +59,116 @@ Example of a two column, responsive, centered grid. All grid layout classes and 
 
 ```
 <div class="grid grid--center">
-  <div class="3/4 1/2--thumb grid__cell"></div>
-  <div class="1/4 1/2--thumb grid__cell"></div>
+  <div class="grid__cell grid__cell--1/4 grid__cell--1/2-at-medium"></div>
+  <div class="grid__cell grid__cell--1/4 grid__cell--1/2-at-medium"></div>
 </div>
 ```
 
+
 ## Settings
 
-**`$av-namespace`**
+**`$grip-namespace`**
 Global prefix for layout and cell class names. Default: `grid`.
 
-**`$av-gutter`**
+**`$grip-gutter`**
 Gutter width between cells. Default: `20px`.
 
-**`$av-width-class-style`**
-Naming style of width classes. Default: `'fraction'`. Options: `fraction` (grid__cell--1/2, grid__cell--3/4 etc), `percentage` (grid__cell--25, grid__cell--50 etc), `fragment` (grid__cell--1-of-3, grid__cell--4-of-5 etc).
+**`$grip-width-class-style`**
+Naming style of width classes. Default: `'fraction'`. Options:
+- `fraction` (grid__cell--1/2, grid__cell--3/4 etc)
+- `percentage` (grid__cell--25, grid__cell--50 etc)
+- `fragment` (grid__cell--1-of-3, grid__cell--4-of-5 etc).
 
-**`$av-widths`**
+**`$grip-widths`**
 Sass list of width denominator values (when expressed as a fraction). For example, 2 produces grid__cell--1/2 width class, 3 produces grid__cell--1/3 and grid__cell--2/3 width classes etc. Default: `( 2, 3, 4 )`.
 *N.B. This setting has a large impact on the size of your compiled CSS. Avoid bloat by inputting just the numbers you'll use.*
 
-**`$av-enable-responsive`**
+**`$grip-enable-responsive`**
 Enable/disable the inclusion of responsive width classes. With this enabled, class names (for denominators set above) will be created for each of your breakpoint aliases (set below). Default: `true`.
 
-**`$av-breakpoints`**
+**`$grip-breakpoints`**
 Sass map of responsive breakpoint aliases and associated media queries (in key-value pairs).
 *N.B. This setting has a large impact on the size of your compiled CSS. Avoid bloat by inputting just the breakpoints you'll use.*
 Default:
 ```
 (
-  "thumb":            "screen and (max-width: 499px)",
-  "handheld":         "screen and (min-width: 500px) and (max-width: 800px)",
-  "handheld-and-up":  "screen and (min-width: 500px)",
-  "pocket":           "screen and (max-width: 800px)",
-  "lap":              "screen and (min-width: 801px) and (max-width: 1024px)",
-  "lap-and-up":       "screen and (min-width: 801px)",
-  "portable":         "screen and (max-width: 1024px)",
-  "desk":             "screen and (min-width: 1025px)",
-  "widescreen":       "screen and (min-width: 1160px)",
-  "retina":           "screen and (-webkit-min-device-pixel-ratio: 2), screen and (min-resolution: 192dpi), screen and (min-resolution: 2dppx)"
+  "medium":  "screen and (min-width: 760px)",
+  "wide":    "screen and (min-width: 960px)",
+  "x-wide":  "screen and (min-width: 1160px)",
 )
 ```
 
+
 ## Grid layouts
+
+### `grid` Block Modifiers
 
 Apply as modifier classes to your base `grid` element. For example; `<div class="grid grid--center">`.
 
 All optionable grid layouts listed below are switched off by default. Set to `true` to enable.
 
-**`$av-enable-grid-center`**
+**`$grip-enable-grid-center`**
 All cells are horizontally centered within the container.
 
-**`$av-enable-grid-cell-center`**
-Center an individual grid cell within the container.
-*N.B. Class should be applied to an individual cell, not the grid container. For example; `<div class="grid__cell grid__cell--center">`.*
-
-**`$av-enable-grid-right`**
+**`$grip-enable-grid-right`**
 All cells are horizontally aligned to the right within the container.
 
-**`$av-enable-grid-middle`**
+**`$grip-enable-grid-middle`**
 All cells are vertically centered within in the container.
 
-**`$av-enable-grid-bottom`**
+**`$grip-enable-grid-bottom`**
 All cells are vertically aligned to the bottom of the container.
 
-**`$av-enable-grid-flush`**
+**`$grip-enable-grid-flush`**
 Gutters removed between cells.
 
-**`$av-enable-grid-tiny`**
+**`$grip-enable-grid-tiny`**
 Gutters between cells set to a quarter of the global gutter value. Default: `5px`.
 
-**`$av-enable-grid-small`**
+**`$grip-enable-grid-small`**
 Gutters between cells set to half of the global gutter value. Default: `10px`.
 
-**`$av-enable-grid-large`**
+**`$grip-enable-grid-large`**
 Gutters between cells set to double the global gutter value. Default: `40px`.
 
-**`$av-enable-grid-huge`**
+**`$grip-enable-grid-huge`**
 Gutters between cells set to quadruple the global gutter value. Default: `80px`.
 
-**`$av-enable-grid-auto`**
+**`$grip-enable-grid-auto`**
 All cells take up an unspecified width set by their content.
 
-**`$av-enable-grid-rev`**
+**`$grip-enable-grid-rev`**
 Grid cells are displayed in the opposite of their source order.
+
+### `grid__cell` Element Modifiers
+
+**`$grip-enable-grid-cell-center`**
+Center an individual grid cell within the container. For example; `<div class="grid__cell grid__cell--center">`.
+
 
 ## Media query
 
-Avalanche includes a media query mixin that makes use of the breakpoint aliases you set. This enables better coupling between your grid and other responsive content items. Usage as follows.
+Grip includes a media query mixin that makes use of the breakpoint aliases you set. This enables better coupling between your grid and other responsive content items. Usage as follows.
 
 ```
-@include av-mq(pocket){
-  .content-item{
+.content-item {
+  @include grip-respond-to(pocket) {
     /* responsive CSS */
   }
 }
 ```
 
+
 ## Browser support
 
-All modern browsers are supported and Internet Explorer from IE9 upwards. If IE8 support is required then all that is needed is a pixel-value to be set for `font-size` on `.grid__cell`. This is due to IE8 not supporting rem units. Use of a 'rem-to-px' check during build is recommended.
+All modern browsers are supported and Internet Explorer from IE9 upwards. If IE8 support is required then all that is needed is a pixel-value to be set for `font-size` on `.grid__cell`. This is due to IE8 not supporting rem units. If you're using [autoprefixer](https://github.com/postcss/autoprefixer) this conversion will be done for you.
+
 
 ## Questions
 
-If you have any questions or need some help then feel free to tweet me at [@colourgarden](http://twitter.com/colourgarden) or [open an issue](https://github.com/colourgarden/avalanche/issues/new).
+If you have any questions or need some help then feel free to [open an issue](https://github.com/meowsus/grip/issues/new).
+
+
+## Special Thanks
+
+- [Tom Hare](https://github.com/colourgarden) for creating a truly great piece of software.

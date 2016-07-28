@@ -317,7 +317,7 @@ $grip-enable-grid-cell-center:  false !default;
 @if $grip-enable-responsive { // [2]
     @each $alias, $query in $grip-breakpoints {
         @media #{$query} {
-            @include grip-create-widths($grip-widths, -for-#{$alias});
+            @include grip-create-widths($grip-widths, -at-#{$alias});
         }
     }
 }

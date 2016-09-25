@@ -59,8 +59,10 @@ Example of a two column, responsive, centered grid. All grid layout classes and 
 
 ```
 <div class="grid grid--center">
-  <div class="grid__cell grid__cell--1/4 grid__cell--1/2-at-medium"></div>
-  <div class="grid__cell grid__cell--1/4 grid__cell--1/2-at-medium"></div>
+  <div class="grid__cell grid__cell--25 grid__cell--50-at-medium"></div>
+  <div class="grid__cell grid__cell--25 grid__cell--50-at-medium"></div>
+  <div class="grid__cell grid__cell--25 grid__cell--50-at-medium"></div>
+  <div class="grid__cell grid__cell--25 grid__cell--50-at-medium"></div>
 </div>
 ```
 
@@ -74,13 +76,23 @@ Global prefix for layout and cell class names. Default: `grid`.
 Gutter width between cells. Default: `16px`.
 
 **`$grip-width-class-style`**
-Naming style of width classes. Default: `'fraction'`. Options:
-- `fraction` (grid__cell--1/2, grid__cell--3/4 etc)
+Naming style of width classes. Default: `'percentage'`. Options:
 - `percentage` (grid__cell--25, grid__cell--50 etc)
+- `fraction` (grid__cell--1/2, grid__cell--3/4 etc)
 - `fragment` (grid__cell--1-of-3, grid__cell--4-of-5 etc).
 
 **`$grip-widths`**
-Sass list of width denominator values (when expressed as a fraction). For example, 2 produces grid__cell--1/2 width class, 3 produces grid__cell--1/3 and grid__cell--2/3 width classes etc. Default: `( 2, 3, 4 )`.
+Sass list of width denominator values (when expressed as a fraction). For example, based on the class style:
+- `2` produces:
+    + as percentage: `grid__cell--50`
+    + as fraction: `grid__cell--1/2`
+    + as fragment: `grid__cell--1-of-2`
+- `3` produces:
+    + as percentage: `grid__cell--33` and `grid__cell--66`
+    + as fraction:  `grid__cell--1/3` and `grid__cell--1/2`
+    + as fragment:  `grid__cell--1-of-3` and `grid__cell--2-of-3`
+- etc.
+Default: `( 2, 3, 4 )`.
 *N.B. This setting has a large impact on the size of your compiled CSS. Avoid bloat by inputting just the numbers you'll use.*
 
 **`$grip-enable-responsive`**

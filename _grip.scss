@@ -17,7 +17,7 @@
 $grip-namespace:  'grid' !default;  // [1]
 $grip-gutter:     16px !default;    // [2]
 
-$grip-width-class-style:  'fraction' !default;  // [3]
+$grip-width-class-style:  'percentage' !default;  // [3]
 $grip-widths:             (2, 3, 4) !default;   // [4]
 
 $grip-enable-responsive:  true !default;  // [5]

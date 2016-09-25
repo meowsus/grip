@@ -166,7 +166,7 @@ Aligns the immediate child of the cell to the right by displaying it as `inline-
 
 ## Browser support
 
-All modern browsers are supported and Internet Explorer from IE9 upwards. If IE8 support is required then all that is needed is a pixel-value to be set for `font-size` on `.grid__cell`. This is due to IE8 not supporting rem units. If you're using [autoprefixer](https://github.com/postcss/autoprefixer) this conversion will be done for you.
+All modern browsers are supported and Internet Explorer from IE9 upwards. If IE8 support is required then all that is needed is a pixel-value to be set for `font-size` on `.grid__cell`. This is due to IE8 not supporting rem units. If you need to support IE8 then you should use something like [gulp-pxrem](https://github.com/nnn-li/gulp-pxrem) in your build step.
 
 
 ## Questions

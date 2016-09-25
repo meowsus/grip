@@ -31,17 +31,17 @@ $grip-breakpoints: (
 //
 // Toggleable grid layout modifiers.
 //
-$grip-enable-grid-center:  false !default;
-$grip-enable-grid-right:   false !default;
-$grip-enable-grid-middle:  false !default;
-$grip-enable-grid-bottom:  false !default;
-$grip-enable-grid-flush:   false !default;
-$grip-enable-grid-tiny:    false !default;
-$grip-enable-grid-small:   false !default;
-$grip-enable-grid-large:   false !default;
-$grip-enable-grid-huge:    false !default;
-$grip-enable-grid-auto:    false !default;
-$grip-enable-grid-rev:     false !default;
+$grip-enable-grid-center:   false !default;
+$grip-enable-grid-right:    false !default;
+$grip-enable-grid-middle:   false !default;
+$grip-enable-grid-bottom:   false !default;
+$grip-enable-grid-flush:    false !default;
+$grip-enable-grid-tiny:     false !default;
+$grip-enable-grid-small:    false !default;
+$grip-enable-grid-large:    false !default;
+$grip-enable-grid-huge:     false !default;
+$grip-enable-grid-auto:     false !default;
+$grip-enable-grid-reverse:  false !default;
 
 
 //
@@ -282,8 +282,8 @@ $grip-enable-grid-cell-content-right:   false !default;
     }
 }
 
-@if ($grip-enable-grid-rev) {
-    .#{$grip-namespace}--rev {
+@if ($grip-enable-grid-reverse) {
+    .#{$grip-namespace}--reverse {
         direction: rtl;
 
         > .#{$grip-namespace}__cell {

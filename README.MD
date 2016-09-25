@@ -149,7 +149,7 @@ Gutters between cells set to quadruple the global gutter value. Default: `64px`.
 **`$grip-enable-grid-auto`**
 All cells take up an unspecified width set by their content.
 
-**`$grip-enable-grid-rev`**
+**`$grip-enable-grid-reverse`**
 Grid cells are displayed in the opposite of their source order.
 
 ### `grid__cell` Element Modifiers

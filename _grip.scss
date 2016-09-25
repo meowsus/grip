@@ -15,7 +15,7 @@
 // 6. responsive breakpoints. Modify as needed.
 //
 $grip-namespace:  'grid' !default;  // [1]
-$grip-gutter:     20px !default;    // [2]
+$grip-gutter:     16px !default;    // [2]
 
 $grip-width-class-style:  'fraction' !default;  // [3]
 $grip-widths:             (2, 3, 4) !default;   // [4]
@@ -233,27 +233,27 @@ $grip-enable-grid-cell-center:  false !default;
 
 @if ($grip-enable-grid-tiny) {
     .#{$grip-namespace}--tiny {
-        margin-left: -($grip-gutter / 4);
+        margin-left: round($grip-gutter / 4) * -1;
 
         > .#{$grip-namespace}__cell {
-            padding-left: ($grip-gutter / 4);
+            padding-left: round($grip-gutter / 4);
         }
     }
 }
 
 @if ($grip-enable-grid-small) {
     .#{$grip-namespace}--small {
-        margin-left: -($grip-gutter / 2);
+        margin-left: round($grip-gutter / 2) * -1;
 
         > .#{$grip-namespace}__cell {
-            padding-left: ($grip-gutter / 2);
+            padding-left: round($grip-gutter / 2);
         }
     }
 }
 
 @if ($grip-enable-grid-large) {
     .#{$grip-namespace}--large {
-        margin-left: -($grip-gutter * 2);
+        margin-left: ($grip-gutter * 2) * -1;
 
         > .#{$grip-namespace}__cell {
             padding-left: ($grip-gutter * 2);
@@ -263,7 +263,7 @@ $grip-enable-grid-cell-center:  false !default;
 
 @if ($grip-enable-grid-huge) {
     .#{$grip-namespace}--huge {
-        margin-left: -($grip-gutter * 4);
+        margin-left: ($grip-gutter * 4) * -1;
 
         > .#{$grip-namespace}__cell {
             padding-left: ($grip-gutter * 4);

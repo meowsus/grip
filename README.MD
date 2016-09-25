@@ -71,7 +71,7 @@ Example of a two column, responsive, centered grid. All grid layout classes and 
 Global prefix for layout and cell class names. Default: `grid`.
 
 **`$grip-gutter`**
-Gutter width between cells. Default: `20px`.
+Gutter width between cells. Default: `16px`.
 
 **`$grip-width-class-style`**
 Naming style of width classes. Default: `'fraction'`. Options:
@@ -123,16 +123,16 @@ All cells are vertically aligned to the bottom of the container.
 Gutters removed between cells.
 
 **`$grip-enable-grid-tiny`**
-Gutters between cells set to a quarter of the global gutter value. Default: `5px`.
+Gutters between cells set to a quarter of the global gutter value. Default: `4px`.
 
 **`$grip-enable-grid-small`**
-Gutters between cells set to half of the global gutter value. Default: `10px`.
+Gutters between cells set to half of the global gutter value. Default: `8px`.
 
 **`$grip-enable-grid-large`**
-Gutters between cells set to double the global gutter value. Default: `40px`.
+Gutters between cells set to double the global gutter value. Default: `32px`.
 
 **`$grip-enable-grid-huge`**
-Gutters between cells set to quadruple the global gutter value. Default: `80px`.
+Gutters between cells set to quadruple the global gutter value. Default: `64px`.
 
 **`$grip-enable-grid-auto`**
 All cells take up an unspecified width set by their content.

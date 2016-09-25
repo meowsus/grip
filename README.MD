@@ -157,6 +157,12 @@ Grid cells are displayed in the opposite of their source order.
 **`$grip-enable-grid-cell-center`**
 Center an individual grid cell within the container. For example; `<div class="grid__cell grid__cell--center">`.
 
+**`$grip-enable-grid-cell-content-center`**
+Centers the immediate child of the cell by displaying it as `inline-block`. For example; `<div class="grid__cell grid__cell--content-center">`
+
+**`$grip-enable-grid-cell-content-right`**
+Aligns the immediate child of the cell to the right by displaying it as `inline-block`. For example; `<div class="grid__cell grid__cell--content-right">`
+
 
 ## Media query
 

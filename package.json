@@ -1,6 +1,6 @@
 {
   "name": "grip-grid",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "description": "Superclean, powerful, responsive, Sass-based, BEM-syntax CSS grid system based on the incredible Avalanche grid system.",
   "main": "_grip.scss",
   "dependencies": {},

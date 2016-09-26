@@ -1,3 +1,6 @@
+# Grip v0.2.2
+- Fix `content-right` & `content-center` grid cell modifiers
+
 # Grip v0.2.1
 - Fix removal of responsive helper
 

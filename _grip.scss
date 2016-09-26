@@ -282,16 +282,18 @@ $grip-enable-grid-cell-content-right:   false !default;
 }
 
 @if ($grip-enable-grid-cell-content-center) {
-    .#{$grip-namespace}__cell--content-center > * {
-        display: inline-block;
+    .#{$grip-namespace}__cell--content-center {
         text-align: center;
+
+        > * { display: inline-block; }
     }
 }
 
 @if ($grip-enable-grid-cell-content-right) {
-    .#{$grip-namespace}__cell--content-right > * {
-        display: inline-block;
+    .#{$grip-namespace}__cell--content-right {
         text-align: right;
+
+        > * { display: inline-block; }
     }
 }
 

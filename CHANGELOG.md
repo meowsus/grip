@@ -1,3 +1,6 @@
+# Grip v0.2.1
+- Fix removal of responsive helper
+
 # Grip v0.2.0
 - Change default gutter width to `16px`
 - Change default class style to `percentage`

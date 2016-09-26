@@ -317,3 +317,24 @@ $grip-enable-grid-cell-content-right:   false !default;
         text-align: right;
     }
 }
+
+
+
+
+
+////////////////////////////////////////
+//  #GRID-WIDTHS
+////////////////////////////////////////
+//
+// 1. output default width modifiers
+// 2. if responsive flag is enabled, add responsive width modifiers
+//
+@include grip-create-widths($grip-widths); // [1]
+
+@if $grip-enable-responsive { // [2]
+    @each $alias, $query in $grip-breakpoints {
+        @media #{$query} {
+            @include grip-create-widths($grip-widths, -at-#{$alias});
+        }
+    }
+}
